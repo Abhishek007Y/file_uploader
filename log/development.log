@@ -1,0 +1,2585 @@
+  [1m[35m (161.6ms)[0m  [1m[35mCREATE DATABASE "file_uploader_development" ENCODING = 'unicode' /*application='FileUploader'*/[0m
+  [1m[35mSQL (2.1ms)[0m  [1m[35mSET search_path TO public /*application='FileUploader'*/[0m
+  [1m[35m (70.0ms)[0m  [1m[35mCREATE DATABASE "file_uploader_dev" ENCODING = 'unicode' /*application='FileUploader'*/[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog /*application='FileUploader'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "active_storage_attachments" CASCADE /*application='FileUploader'*/[0m
+  [1m[35m (11.4ms)[0m  [1m[35mCREATE TABLE "active_storage_attachments" ("id" bigserial primary key, "name" character varying NOT NULL, "record_type" character varying NOT NULL, "record_id" bigint NOT NULL, "blob_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL) /*application='FileUploader'*/[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE INDEX "index_active_storage_attachments_on_blob_id" ON "active_storage_attachments" ("blob_id") /*application='FileUploader'*/[0m
+  [1m[35m (4.6ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_active_storage_attachments_uniqueness" ON "active_storage_attachments" ("record_type", "record_id", "name", "blob_id") /*application='FileUploader'*/[0m
+  [1m[35m (0.7ms)[0m  [1m[35mDROP TABLE IF EXISTS "active_storage_blobs" CASCADE /*application='FileUploader'*/[0m
+  [1m[35m (6.3ms)[0m  [1m[35mCREATE TABLE "active_storage_blobs" ("id" bigserial primary key, "key" character varying NOT NULL, "filename" character varying NOT NULL, "content_type" character varying, "metadata" text, "service_name" character varying NOT NULL, "byte_size" bigint NOT NULL, "checksum" character varying, "created_at" timestamp(6) NOT NULL) /*application='FileUploader'*/[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_active_storage_blobs_on_key" ON "active_storage_blobs" ("key") /*application='FileUploader'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "active_storage_variant_records" CASCADE /*application='FileUploader'*/[0m
+  [1m[35m (5.5ms)[0m  [1m[35mCREATE TABLE "active_storage_variant_records" ("id" bigserial primary key, "blob_id" bigint NOT NULL, "variation_digest" character varying NOT NULL) /*application='FileUploader'*/[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_active_storage_variant_records_uniqueness" ON "active_storage_variant_records" ("blob_id", "variation_digest") /*application='FileUploader'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "uploaded_files" CASCADE /*application='FileUploader'*/[0m
+  [1m[35m (7.8ms)[0m  [1m[35mCREATE TABLE "uploaded_files" ("id" bigserial primary key, "user_id" bigint NOT NULL, "title" character varying, "description" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "file_path" character varying, "send_status" character varying, "send_mail" boolean, "other_data" text, "file_url" character varying) /*application='FileUploader'*/[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE INDEX "index_uploaded_files_on_user_id" ON "uploaded_files" ("user_id") /*application='FileUploader'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE /*application='FileUploader'*/[0m
+  [1m[35m (6.6ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp(6), "remember_created_at" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='FileUploader'*/[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email") /*application='FileUploader'*/[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token") /*application='FileUploader'*/[0m
+  [1m[35m (4.0ms)[0m  [1m[35mALTER TABLE "active_storage_attachments" ADD CONSTRAINT "fk_rails_c3b3935057"
+FOREIGN KEY ("blob_id")
+  REFERENCES "active_storage_blobs" ("id")
+ /*application='FileUploader'*/[0m
+  [1m[35m (2.7ms)[0m  [1m[35mALTER TABLE "active_storage_variant_records" ADD CONSTRAINT "fk_rails_993965df05"
+FOREIGN KEY ("blob_id")
+  REFERENCES "active_storage_blobs" ("id")
+ /*application='FileUploader'*/[0m
+  [1m[35m (2.1ms)[0m  [1m[35mALTER TABLE "uploaded_files" ADD CONSTRAINT "fk_rails_ece9dfb06e"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='FileUploader'*/[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='FileUploader'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='FileUploader'*/[0m
+  [1m[35m (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20241228154002) /*application='FileUploader'*/[0m
+  [1m[35m (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20241227213726),
+(20241227213710),
+(20241227213648); /*application='FileUploader'*/[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='FileUploader'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='FileUploader'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (1.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2025-02-08 06:51:07.382088', '2025-02-08 06:51:07.382092') RETURNING "key" /*application='FileUploader'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='FileUploader'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='FileUploader'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.9ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', '7ac89d2d47389be3d95e5575845dd1badad764a2', '2025-02-08 06:51:07.389492', '2025-02-08 06:51:07.389496') RETURNING "key" /*application='FileUploader'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_try_advisory_lock(802963537191744915) /*application='FileUploader'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='FileUploader'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='FileUploader'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(802963537191744915) /*application='FileUploader'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='FileUploader'*/[0m
+Started GET "/" for 127.0.0.1 at 2025-02-08 12:21:40 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='FileUploader'*/[0m
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 17.6ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 36.1ms | GC: 2.1ms)
+Completed 200 OK in 148ms (Views: 44.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 20.9ms)
+
+
+Started GET "/assets/application-5b22df8a.css" for 127.0.0.1 at 2025-02-08 12:21:41 +0530
+Started GET "/assets/turbo-86e38c3c.js" for 127.0.0.1 at 2025-02-08 12:21:41 +0530
+Started GET "/assets/application-89ccb7a5.js" for 127.0.0.1 at 2025-02-08 12:21:41 +0530
+Started GET "/assets/controllers/application-3affb389.js" for 127.0.0.1 at 2025-02-08 12:21:41 +0530
+Started GET "/assets/controllers/hello_controller-708796bd.js" for 127.0.0.1 at 2025-02-08 12:21:41 +0530
+Started GET "/assets/controllers/index-ee64e1f1.js" for 127.0.0.1 at 2025-02-08 12:21:41 +0530
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 12:21:41 +0530
+Started GET "/assets/turbo.min-fae85750.js" for 127.0.0.1 at 2025-02-08 12:21:41 +0530
+Started GET "/assets/stimulus.min-4b1e420e.js" for 127.0.0.1 at 2025-02-08 12:21:41 +0530
+Started GET "/assets/stimulus-loading-1fc53fe7.js" for 127.0.0.1 at 2025-02-08 12:21:41 +0530
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:21:41 +0530
+Processing by HomeController#index as */*
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:21:41 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 29.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 33.0ms | GC: 0.7ms)
+Completed 200 OK in 77ms (Views: 33.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.7ms)
+
+
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 4.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.3ms | GC: 0.0ms)
+Completed 200 OK in 100ms (Views: 6.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.3ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:21:42 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 7.9ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.5ms | GC: 0.2ms)
+Completed 200 OK in 44ms (Views: 13.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:21:42 +0530
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:21:42 +0530
+Processing by HomeController#index as */*
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 3.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.3ms | GC: 0.0ms)
+Completed 200 OK in 64ms (Views: 9.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 9.7ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:21:42 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 5.2ms | GC: 0.8ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.8ms | GC: 0.8ms)
+Completed 200 OK in 77ms (Views: 7.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.4ms)
+
+
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 3.9ms | GC: 0.7ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.3ms | GC: 0.7ms)
+Completed 200 OK in 41ms (Views: 5.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.5ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:21:42 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 6.4ms | GC: 0.9ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.5ms | GC: 0.9ms)
+Completed 200 OK in 91ms (Views: 9.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.9ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2025-02-08 12:21:49 +0530
+Processing by Users::RegistrationsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"[FILTERED]", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign Up"}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'abhishek@gmail.com' LIMIT 1 /*action='create',application='FileUploader',controller='registrations'*/[0m
+  ↳ app/controllers/users/registrations_controller.rb:6:in `create'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*action='create',application='FileUploader',controller='registrations'*/[0m
+  ↳ app/controllers/users/registrations_controller.rb:14:in `create'
+  [1m[36mUser Exists? (2.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'abhishek@gmail.com' LIMIT 1 /*action='create',application='FileUploader',controller='registrations'*/[0m
+  ↳ app/controllers/users/registrations_controller.rb:14:in `create'
+  [1m[36mCACHE User Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'abhishek@gmail.com' LIMIT 1[0m
+  ↳ app/controllers/users/registrations_controller.rb:14:in `create'
+  [1m[36mUser Create (1.0ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at") VALUES ('abhishek@gmail.com', '$2a$12$PsmA6q/YqVnXN6xQlJLoV.k1px..TAhvcueZxv7MQt5pPA89W3hUa', NULL, NULL, NULL, '2025-02-08 06:51:49.425410', '2025-02-08 06:51:49.425410') RETURNING "id" /*action='create',application='FileUploader',controller='registrations'*/[0m
+  ↳ app/controllers/users/registrations_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT /*action='create',application='FileUploader',controller='registrations'*/[0m
+  ↳ app/controllers/users/registrations_controller.rb:14:in `create'
+Redirected to http://127.0.0.1:3000/users/sign_in
+Completed 302 Found in 358ms (ActiveRecord: 20.8ms (4 queries, 1 cached) | GC: 1.6ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2025-02-08 12:21:49 +0530
+Processing by Users::SessionsController#new as TURBO_STREAM
+  Rendering layout layouts/application.html.erb
+  Rendering /home/abhishek/.rvm/gems/ruby-3.2.2/gems/devise-4.9.4/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/abhishek/.rvm/gems/ruby-3.2.2/gems/devise-4.9.4/app/views/devise/shared/_links.html.erb (Duration: 1.0ms | GC: 0.0ms)
+  Rendered /home/abhishek/.rvm/gems/ruby-3.2.2/gems/devise-4.9.4/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 9.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.2ms | GC: 0.1ms)
+Completed 200 OK in 38ms (Views: 13.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.5ms)
+
+
+Started HEAD "/users/sign_in" for 127.0.0.1 at 2025-02-08 12:21:49 +0530
+Processing by Users::SessionsController#new as */*
+Started HEAD "/users/sign_in" for 127.0.0.1 at 2025-02-08 12:21:49 +0530
+Processing by Users::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/abhishek/.rvm/gems/ruby-3.2.2/gems/devise-4.9.4/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/abhishek/.rvm/gems/ruby-3.2.2/gems/devise-4.9.4/app/views/devise/shared/_links.html.erb (Duration: 0.3ms | GC: 0.0ms)
+  Rendered /home/abhishek/.rvm/gems/ruby-3.2.2/gems/devise-4.9.4/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 3.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.3ms | GC: 0.0ms)
+Completed 200 OK in 53ms (Views: 7.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.1ms)
+
+
+  Rendering layout layouts/application.html.erb
+  Rendering /home/abhishek/.rvm/gems/ruby-3.2.2/gems/devise-4.9.4/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/abhishek/.rvm/gems/ruby-3.2.2/gems/devise-4.9.4/app/views/devise/shared/_links.html.erb (Duration: 0.3ms | GC: 0.0ms)
+  Rendered /home/abhishek/.rvm/gems/ruby-3.2.2/gems/devise-4.9.4/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 4.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.5ms | GC: 0.0ms)
+Completed 200 OK in 56ms (Views: 8.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.1ms)
+
+
+Started HEAD "/users/sign_in" for 127.0.0.1 at 2025-02-08 12:21:49 +0530
+Processing by Users::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/abhishek/.rvm/gems/ruby-3.2.2/gems/devise-4.9.4/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/abhishek/.rvm/gems/ruby-3.2.2/gems/devise-4.9.4/app/views/devise/shared/_links.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered /home/abhishek/.rvm/gems/ruby-3.2.2/gems/devise-4.9.4/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 2.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.3ms | GC: 0.0ms)
+Completed 200 OK in 25ms (Views: 4.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2025-02-08 12:21:52 +0530
+Processing by Users::SessionsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"[FILTERED]", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'abhishek@gmail.com' ORDER BY "users"."id" ASC LIMIT 1 /*action='create',application='FileUploader',controller='sessions'*/[0m
+  ↳ app/controllers/users/sessions_controller.rb:6:in `create'
+Redirected to http://127.0.0.1:3000/dashboard
+Completed 303 See Other in 364ms (ActiveRecord: 1.4ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 12:21:53 +0530
+Processing by DashboardsController#show as TURBO_STREAM
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.0ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 20.0ms | GC: 1.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 21.0ms | GC: 1.3ms)
+Completed 200 OK in 100ms (Views: 16.1ms | ActiveRecord: 9.0ms (2 queries, 0 cached) | GC: 9.6ms)
+
+
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 12:21:53 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 12:21:53 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:21:53 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.7ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 5.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 47.3ms | GC: 0.4ms)
+Completed 200 OK in 151ms (Views: 47.9ms | ActiveRecord: 1.9ms (2 queries, 0 cached) | GC: 3.2ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:21:53 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.4ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 2.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.5ms | GC: 0.0ms)
+Completed 200 OK in 32ms (Views: 4.6ms | ActiveRecord: 1.2ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:21:53 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.4ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 5.2ms | GC: 2.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.1ms | GC: 2.1ms)
+Completed 200 OK in 29ms (Views: 7.5ms | ActiveRecord: 0.9ms (2 queries, 0 cached) | GC: 2.1ms)
+
+
+Started GET "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:21:54 +0530
+  [1m[36mUser Load (1.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 8.5ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.0ms | GC: 0.2ms)
+Completed 200 OK in 51ms (Views: 11.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.2ms)
+
+
+Started GET "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:21:54 +0530
+  [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 2.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.6ms | GC: 0.0ms)
+Completed 200 OK in 69ms (Views: 5.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:21:56 +0530
+  [1m[36mUser Load (1.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 2.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.2ms | GC: 0.3ms)
+Completed 200 OK in 47ms (Views: 4.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.3ms)
+
+
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:22:04 +0530
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:22:04 +0530
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:22:04 +0530
+  [1m[36mUser Load (7.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  [1m[36mUser Load (1.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  [1m[36mUser Load (49.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 2.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.7ms | GC: 0.0ms)
+Completed 200 OK in 59ms (Views: 4.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.4ms)
+
+
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 1.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.0ms | GC: 0.0ms)
+  Rendering layout layouts/application.html.erb
+Completed 200 OK in 54ms (Views: 3.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+
+
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 3.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.5ms | GC: 0.0ms)
+Completed 200 OK in 83ms (Views: 6.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.6ms)
+
+
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 12:22:07 +0530
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 12:22:07 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:22:07 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (8.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (2.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 33.5ms | GC: 3.7ms)
+  Rendered layout layouts/application.html.erb (Duration: 51.4ms | GC: 5.1ms)
+Completed 200 OK in 126ms (Views: 35.7ms | ActiveRecord: 29.2ms (2 queries, 0 cached) | GC: 6.2ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:22:07 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:22:08 +0530
+  [1m[36mUploadedFile Load (1.5ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 8.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.6ms | GC: 0.0ms)
+Completed 200 OK in 60ms (Views: 11.6ms | ActiveRecord: 2.4ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.2ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.6ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.3ms | GC: 0.2ms)
+Completed 200 OK in 40ms (Views: 5.9ms | ActiveRecord: 1.7ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 12:23:19 +0530
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 12:23:19 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 12:23:19 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2025-02-08 12:23:21 +0530
+Processing by Users::SessionsController#new as HTML
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='FileUploader',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:3000/dashboard
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 11ms (ActiveRecord: 1.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 12:23:21 +0530
+Processing by DashboardsController#show as HTML
+Started HEAD "/users/sign_in" for 127.0.0.1 at 2025-02-08 12:23:21 +0530
+Processing by Users::SessionsController#new as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='FileUploader',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:3000/dashboard
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 18ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.1ms)
+
+
+Started HEAD "/users/sign_in" for 127.0.0.1 at 2025-02-08 12:23:21 +0530
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+Processing by Users::SessionsController#new as */*
+  [1m[36mUploadedFile Load (1.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 10.0ms | GC: 0.1ms)
+  [1m[36mUser Load (2.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='FileUploader',controller='sessions'*/[0m
+  Rendered layout layouts/application.html.erb (Duration: 13.7ms | GC: 0.1ms)
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:23:21 +0530
+Redirected to http://127.0.0.1:3000/dashboard
+Completed 200 OK in 83ms (Views: 17.6ms | ActiveRecord: 2.4ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 15ms (ActiveRecord: 2.7ms (1 query, 0 cached) | GC: 0.1ms)
+
+
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.7ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.7ms | GC: 0.0ms)
+Completed 200 OK in 37ms (Views: 7.1ms | ActiveRecord: 1.2ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:23:21 +0530
+Processing by DashboardsController#show as */*
+Started GET "/users/style.css" for 127.0.0.1 at 2025-02-08 12:23:21 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/users/style.css"):
+  
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:23:21 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (3.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (2.0ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 12.1ms | GC: 0.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.5ms | GC: 0.1ms)
+Completed 200 OK in 169ms (Views: 13.2ms | ActiveRecord: 4.9ms (2 queries, 0 cached) | GC: 20.9ms)
+
+
+Started HEAD "/users/sign_in" for 127.0.0.1 at 2025-02-08 12:23:21 +0530
+Processing by Users::SessionsController#new as */*
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='FileUploader',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:3000/dashboard
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 11ms (ActiveRecord: 0.9ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.5ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 7.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.4ms | GC: 0.0ms)
+Completed 200 OK in 138ms (Views: 9.6ms | ActiveRecord: 1.1ms (2 queries, 0 cached) | GC: 2.5ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:23:21 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.9ms | GC: 0.0ms)
+Completed 200 OK in 33ms (Views: 6.0ms | ActiveRecord: 1.2ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/responsive.css" for 127.0.0.1 at 2025-02-08 12:23:21 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/users/responsive.css"):
+  
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:23:22 +0530
+Processing by DashboardsController#show as */*
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:23:22 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (2.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 7.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.0ms | GC: 0.0ms)
+Completed 200 OK in 58ms (Views: 14.5ms | ActiveRecord: 2.8ms (2 queries, 0 cached) | GC: 2.0ms)
+
+
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.7ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.8ms | GC: 1.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.5ms | GC: 1.1ms)
+Completed 200 OK in 105ms (Views: 8.7ms | ActiveRecord: 1.2ms (2 queries, 0 cached) | GC: 4.8ms)
+
+
+Started GET "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:23:28 +0530
+  [1m[36mUser Load (3.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 4.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.6ms | GC: 0.0ms)
+Completed 200 OK in 39ms (Views: 11.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:23:28 +0530
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:23:28 +0530
+  [1m[36mUser Load (2.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 2.8ms | GC: 0.0ms)
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 5.0ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.7ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.8ms | GC: 0.3ms)
+Completed 200 OK in 48ms (Views: 9.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.3ms)
+
+
+Completed 200 OK in 58ms (Views: 8.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.8ms)
+
+
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:23:28 +0530
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 1.6ms | GC: 0.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.7ms | GC: 0.1ms)
+Completed 200 OK in 23ms (Views: 3.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.1ms)
+
+
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 12:23:40 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:23:40 +0530
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 12:23:40 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (3.1ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 6.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.8ms | GC: 0.0ms)
+Completed 200 OK in 201ms (Views: 6.4ms | ActiveRecord: 3.5ms (2 queries, 0 cached) | GC: 10.1ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:23:40 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:23:40 +0530
+Processing by DashboardsController#show as */*
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 3.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.4ms | GC: 0.0ms)
+Completed 200 OK in 64ms (Views: 6.4ms | ActiveRecord: 1.1ms (2 queries, 0 cached) | GC: 0.1ms)
+
+
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 5.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.1ms | GC: 0.0ms)
+Completed 200 OK in 79ms (Views: 5.9ms | ActiveRecord: 2.3ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/uploaded_files/share" for 127.0.0.1 at 2025-02-08 12:23:52 +0530
+Processing by UploadedFilesController#share as HTML
+  [1m[36mUser Load (4.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/share.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  ↳ app/views/uploaded_files/share.html.erb:6:in `collect'
+  Rendered uploaded_files/share.html.erb within layouts/application (Duration: 22.9ms | GC: 0.7ms)
+  Rendered layout layouts/application.html.erb (Duration: 24.4ms | GC: 0.7ms)
+Completed 200 OK in 79ms (Views: 23.3ms | ActiveRecord: 6.1ms (2 queries, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/uploaded_files/share" for 127.0.0.1 at 2025-02-08 12:23:54 +0530
+Processing by UploadedFilesController#share as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/share.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.5ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  ↳ app/views/uploaded_files/share.html.erb:6:in `collect'
+  Rendered uploaded_files/share.html.erb within layouts/application (Duration: 4.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.9ms | GC: 0.2ms)
+Completed 200 OK in 38ms (Views: 6.2ms | ActiveRecord: 1.0ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started HEAD "/uploaded_files/share" for 127.0.0.1 at 2025-02-08 12:23:54 +0530
+Started HEAD "/uploaded_files/share" for 127.0.0.1 at 2025-02-08 12:23:54 +0530
+Processing by UploadedFilesController#share as */*
+Started HEAD "/uploaded_files/share" for 127.0.0.1 at 2025-02-08 12:23:54 +0530
+Processing by UploadedFilesController#share as */*
+Processing by UploadedFilesController#share as */*
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/share.html.erb within layouts/application
+  [1m[36mUser Load (4.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  [1m[36mUploadedFile Load (1.2ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendering layout layouts/application.html.erb
+  ↳ app/views/uploaded_files/share.html.erb:6:in `collect'
+  Rendering uploaded_files/share.html.erb within layouts/application
+  [1m[36mUser Load (5.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/share.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.3ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  ↳ app/views/uploaded_files/share.html.erb:6:in `collect'
+  Rendered uploaded_files/share.html.erb within layouts/application (Duration: 20.7ms | GC: 6.9ms)
+  Rendered uploaded_files/share.html.erb within layouts/application (Duration: 7.8ms | GC: 0.7ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.2ms | GC: 0.7ms)
+  [1m[36mUploadedFile Load (5.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendered layout layouts/application.html.erb (Duration: 36.6ms | GC: 7.6ms)
+Completed 200 OK in 99ms (Views: 12.1ms | ActiveRecord: 5.9ms (2 queries, 0 cached) | GC: 7.6ms)
+
+
+  ↳ app/views/uploaded_files/share.html.erb:6:in `collect'
+Completed 200 OK in 131ms (Views: 38.4ms | ActiveRecord: 1.9ms (2 queries, 0 cached) | GC: 8.9ms)
+
+
+  Rendered uploaded_files/share.html.erb within layouts/application (Duration: 32.8ms | GC: 3.8ms)
+  Rendered layout layouts/application.html.erb (Duration: 37.3ms | GC: 3.8ms)
+Completed 200 OK in 114ms (Views: 31.9ms | ActiveRecord: 10.6ms (2 queries, 0 cached) | GC: 9.2ms)
+
+
+Started HEAD "/uploaded_files/share" for 127.0.0.1 at 2025-02-08 12:26:38 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#share as */*
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/share.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  ↳ app/views/uploaded_files/share.html.erb:6:in `collect'
+  Rendered uploaded_files/share.html.erb within layouts/application (Duration: 14.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 31.3ms | GC: 0.0ms)
+Completed 200 OK in 168ms (Views: 31.3ms | ActiveRecord: 39.8ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 12:26:40 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 12:26:40 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:26:40 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (4.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (4.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 9.6ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 53.6ms | GC: 7.7ms)
+Completed 200 OK in 148ms (Views: 63.3ms | ActiveRecord: 9.7ms (2 queries, 0 cached) | GC: 13.1ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:26:40 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:26:40 +0530
+Processing by DashboardsController#show as */*
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (2.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.7ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 3.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.4ms | GC: 0.0ms)
+Completed 200 OK in 65ms (Views: 5.3ms | ActiveRecord: 3.5ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+  [1m[36mUser Load (31.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.1ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.2ms | GC: 0.0ms)
+Completed 200 OK in 93ms (Views: 5.1ms | ActiveRecord: 38.9ms (2 queries, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2025-02-08 12:26:41 +0530
+Processing by HomeController#index as HTML
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:26:41 +0530
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:26:41 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 7.7ms | GC: 0.0ms)
+Processing by HomeController#index as */*
+  Rendered layout layouts/application.html.erb (Duration: 28.5ms | GC: 0.0ms)
+Completed 200 OK in 74ms (Views: 31.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 4.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.3ms | GC: 0.0ms)
+Completed 200 OK in 67ms (Views: 14.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 3.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.9ms | GC: 0.0ms)
+Completed 200 OK in 65ms (Views: 8.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:26:41 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 4.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.1ms | GC: 0.0ms)
+Completed 200 OK in 28ms (Views: 7.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2025-02-08 12:26:46 +0530
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 3.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.6ms | GC: 0.0ms)
+Completed 200 OK in 55ms (Views: 5.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 12:26:46 +0530
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:26:46 +0530
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:26:46 +0530
+Processing by HomeController#index as */*
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 3.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.3ms | GC: 0.0ms)
+  Rendering layout layouts/application.html.erb
+Completed 200 OK in 45ms (Views: 16.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 6.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.9ms | GC: 0.0ms)
+Completed 200 OK in 60ms (Views: 9.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:26:46 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 4.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.8ms | GC: 0.0ms)
+Completed 200 OK in 30ms (Views: 6.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:26:47 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 3.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.9ms | GC: 0.0ms)
+Completed 200 OK in 34ms (Views: 8.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:26:47 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 4.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.3ms | GC: 0.0ms)
+Completed 200 OK in 39ms (Views: 8.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:26:47 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 4.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.7ms | GC: 0.0ms)
+Completed 200 OK in 28ms (Views: 6.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2025-02-08 12:27:19 +0530
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 2.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.3ms | GC: 0.2ms)
+Completed 200 OK in 29ms (Views: 9.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.6ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:27:19 +0530
+Processing by HomeController#index as */*
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 12:27:19 +0530
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 6.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.7ms | GC: 0.0ms)
+Completed 200 OK in 51ms (Views: 13.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.4ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:27:19 +0530
+Processing by HomeController#index as */*
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:27:19 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 4.2ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.5ms | GC: 0.4ms)
+Completed 200 OK in 50ms (Views: 11.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.4ms)
+
+
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 4.6ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.8ms | GC: 0.4ms)
+Completed 200 OK in 52ms (Views: 8.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.7ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:27:19 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 4.8ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.6ms | GC: 0.4ms)
+Completed 200 OK in 27ms (Views: 7.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.4ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:27:20 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 4.7ms | GC: 0.5ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.5ms | GC: 0.5ms)
+Completed 200 OK in 30ms (Views: 7.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.5ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:27:20 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 3.8ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.0ms | GC: 0.3ms)
+Completed 200 OK in 28ms (Views: 6.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.3ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2025-02-08 12:27:46 +0530
+Processing by Users::RegistrationsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"[FILTERED]", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign Up"}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='create',application='FileUploader',controller='registrations'*/[0m
+Redirected to http://127.0.0.1:3000/dashboard
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 30ms (ActiveRecord: 12.3ms (1 query, 0 cached) | GC: 0.9ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 12:27:46 +0530
+Processing by DashboardsController#show as TURBO_STREAM
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 11.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 12.8ms | GC: 0.0ms)
+Completed 200 OK in 61ms (Views: 10.2ms | ActiveRecord: 10.7ms (2 queries, 0 cached) | GC: 0.9ms)
+
+
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 12:27:46 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 12:27:46 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:27:46 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (13.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (28.4ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 31.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 57.3ms | GC: 0.2ms)
+Completed 200 OK in 135ms (Views: 33.2ms | ActiveRecord: 42.2ms (2 queries, 0 cached) | GC: 0.6ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:27:47 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:27:47 +0530
+Processing by DashboardsController#show as */*
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  [1m[36mUser Load (3.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering dashboards/show.html.erb within layouts/application
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 9.0ms | GC: 0.0ms)
+  [1m[36mUploadedFile Load (1.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendered layout layouts/application.html.erb (Duration: 13.4ms | GC: 1.9ms)
+  ↳ app/views/dashboards/show.html.erb:96
+Completed 200 OK in 70ms (Views: 13.6ms | ActiveRecord: 3.1ms (2 queries, 0 cached) | GC: 2.5ms)
+
+
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 10.3ms | GC: 1.9ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.2ms | GC: 1.9ms)
+Completed 200 OK in 67ms (Views: 13.1ms | ActiveRecord: 5.2ms (2 queries, 0 cached) | GC: 2.5ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:15 +0530
+Processing by DashboardsController#show as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 9.2ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 12.5ms | GC: 0.5ms)
+Completed 200 OK in 62ms (Views: 12.6ms | ActiveRecord: 8.7ms (2 queries, 0 cached) | GC: 1.7ms)
+
+
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 12:28:15 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 12:28:15 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 12:28:15 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:15 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (3.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (2.0ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 6.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.0ms | GC: 0.0ms)
+Completed 200 OK in 44ms (Views: 6.6ms | ActiveRecord: 5.1ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:15 +0530
+Processing by DashboardsController#show as */*
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:15 +0530
+Processing by DashboardsController#show as */*
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:15 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (10.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (8.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 12.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.4ms | GC: 0.0ms)
+Completed 200 OK in 83ms (Views: 6.4ms | ActiveRecord: 19.4ms (2 queries, 0 cached) | GC: 3.8ms)
+
+
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.0ms | GC: 0.0ms)
+Completed 200 OK in 76ms (Views: 5.9ms | ActiveRecord: 1.5ms (2 queries, 0 cached) | GC: 4.6ms)
+
+
+  [1m[36mUser Load (6.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (2.4ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 6.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.0ms | GC: 1.9ms)
+Completed 200 OK in 105ms (Views: 15.1ms | ActiveRecord: 8.5ms (2 queries, 0 cached) | GC: 9.1ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:16 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (2.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 11.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.4ms | GC: 0.0ms)
+Completed 200 OK in 44ms (Views: 11.3ms | ActiveRecord: 3.5ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:16 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (4.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 5.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.8ms | GC: 0.0ms)
+Completed 200 OK in 41ms (Views: 5.8ms | ActiveRecord: 6.3ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:37 +0530
+Processing by DashboardsController#show as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.7ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 8.5ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.1ms | GC: 0.4ms)
+Completed 200 OK in 64ms (Views: 12.7ms | ActiveRecord: 9.2ms (2 queries, 0 cached) | GC: 1.5ms)
+
+
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 12:28:37 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:37 +0530
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 12:28:37 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.1ms | GC: 0.0ms)
+Completed 200 OK in 196ms (Views: 6.3ms | ActiveRecord: 1.1ms (2 queries, 0 cached) | GC: 9.1ms)
+
+
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 12:28:38 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:38 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 7.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.1ms | GC: 0.0ms)
+Completed 200 OK in 79ms (Views: 9.3ms | ActiveRecord: 1.5ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:38 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.5ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.5ms | GC: 0.2ms)
+Completed 200 OK in 48ms (Views: 5.7ms | ActiveRecord: 2.2ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:38 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.5ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 3.6ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.9ms | GC: 0.3ms)
+Completed 200 OK in 30ms (Views: 5.0ms | ActiveRecord: 0.9ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:38 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (3.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 9.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.5ms | GC: 0.0ms)
+Completed 200 OK in 46ms (Views: 8.7ms | ActiveRecord: 4.5ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:38 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.2ms | GC: 0.0ms)
+Completed 200 OK in 47ms (Views: 8.5ms | ActiveRecord: 2.0ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:51 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='FileUploader'*/[0m
+Processing by DashboardsController#show as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 11.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 28.8ms | GC: 0.0ms)
+Completed 200 OK in 174ms (Views: 31.7ms | ActiveRecord: 36.5ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:52 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:52 +0530
+  [1m[36mUploadedFile Load (2.7ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 12:28:52 +0530
+Processing by DashboardsController#show as */*
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 18.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 21.4ms | GC: 0.0ms)
+Completed 200 OK in 70ms (Views: 34.4ms | ActiveRecord: 3.6ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+  [1m[36mUser Load (1.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 12.4ms | GC: 0.7ms)
+  Rendered layout layouts/application.html.erb (Duration: 17.6ms | GC: 0.7ms)
+Completed 200 OK in 121ms (Views: 20.1ms | ActiveRecord: 2.4ms (2 queries, 0 cached) | GC: 27.9ms)
+
+
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 12:28:52 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 12:28:52 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:52 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 5.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.8ms | GC: 0.4ms)
+Completed 200 OK in 36ms (Views: 8.0ms | ActiveRecord: 1.5ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:52 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.7ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.0ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.7ms | GC: 0.2ms)
+Completed 200 OK in 38ms (Views: 6.6ms | ActiveRecord: 1.1ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:53 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.9ms | GC: 0.0ms)
+Completed 200 OK in 47ms (Views: 5.8ms | ActiveRecord: 1.8ms (2 queries, 0 cached) | GC: 0.1ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:28:53 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 5.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.7ms | GC: 0.0ms)
+Completed 200 OK in 51ms (Views: 8.1ms | ActiveRecord: 1.4ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:42:08 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='FileUploader'*/[0m
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 11.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 26.0ms | GC: 0.0ms)
+Completed 200 OK in 156ms (Views: 27.2ms | ActiveRecord: 33.2ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 12:42:09 +0530
+Processing by DashboardsController#show as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.6ms | GC: 0.0ms)
+Completed 200 OK in 45ms (Views: 6.7ms | ActiveRecord: 1.4ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:42:09 +0530
+Processing by DashboardsController#show as */*
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 12:42:09 +0530
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 12:42:09 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+  [1m[36mUser Load (6.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (10.2ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 13.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.5ms | GC: 0.0ms)
+Completed 200 OK in 239ms (Views: 10.8ms | ActiveRecord: 16.4ms (2 queries, 0 cached) | GC: 39.9ms)
+
+
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 12:42:09 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:42:09 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.6ms | GC: 0.0ms)
+Completed 200 OK in 33ms (Views: 5.8ms | ActiveRecord: 1.3ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:42:09 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (7.3ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 11.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.4ms | GC: 0.0ms)
+Completed 200 OK in 42ms (Views: 7.0ms | ActiveRecord: 8.1ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:42:10 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 7.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.9ms | GC: 0.0ms)
+Completed 200 OK in 41ms (Views: 8.9ms | ActiveRecord: 2.1ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:42:10 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (2.2ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 6.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.3ms | GC: 0.0ms)
+Completed 200 OK in 53ms (Views: 16.6ms | ActiveRecord: 2.9ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:42:10 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 5.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.5ms | GC: 0.0ms)
+Completed 200 OK in 44ms (Views: 9.2ms | ActiveRecord: 2.2ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/uploaded_files/share" for 127.0.0.1 at 2025-02-08 12:42:10 +0530
+Processing by UploadedFilesController#share as HTML
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/share.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  ↳ app/views/uploaded_files/share.html.erb:6:in `collect'
+  Rendered uploaded_files/share.html.erb within layouts/application (Duration: 8.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.0ms | GC: 0.0ms)
+Completed 200 OK in 59ms (Views: 10.7ms | ActiveRecord: 1.9ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 12:42:32 +0530
+Processing by DashboardsController#show as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 11.6ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.4ms | GC: 0.5ms)
+Completed 200 OK in 71ms (Views: 11.6ms | ActiveRecord: 14.3ms (2 queries, 0 cached) | GC: 1.5ms)
+
+
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 12:42:32 +0530
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 12:42:32 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:42:32 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (8.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 11.0ms | GC: 0.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 16.3ms | GC: 0.2ms)
+Completed 200 OK in 107ms (Views: 24.7ms | ActiveRecord: 8.8ms (2 queries, 0 cached) | GC: 5.2ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:42:33 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.9ms | GC: 0.0ms)
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 12:42:33 +0530
+Completed 200 OK in 33ms (Views: 6.2ms | ActiveRecord: 2.3ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:42:33 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (13.3ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 17.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 20.2ms | GC: 0.0ms)
+Completed 200 OK in 57ms (Views: 7.7ms | ActiveRecord: 13.9ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:42:33 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.7ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 6.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.0ms | GC: 0.0ms)
+Completed 200 OK in 38ms (Views: 9.4ms | ActiveRecord: 1.3ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:42:33 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.8ms | GC: 0.0ms)
+Completed 200 OK in 51ms (Views: 11.3ms | ActiveRecord: 1.6ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:42:33 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.5ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.7ms | GC: 0.0ms)
+Completed 200 OK in 61ms (Views: 7.3ms | ActiveRecord: 0.9ms (2 queries, 0 cached) | GC: 3.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 12:44:26 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='FileUploader'*/[0m
+Processing by DashboardsController#show as HTML
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 13.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 28.9ms | GC: 0.0ms)
+Completed 200 OK in 174ms (Views: 30.5ms | ActiveRecord: 43.4ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 12:44:26 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 12:44:26 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:44:26 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (4.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (2.1ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 12.0ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.6ms | GC: 0.3ms)
+Completed 200 OK in 148ms (Views: 12.3ms | ActiveRecord: 6.3ms (2 queries, 0 cached) | GC: 9.5ms)
+
+
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 12:44:26 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:44:27 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (2.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (3.0ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 7.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.3ms | GC: 0.0ms)
+Completed 200 OK in 47ms (Views: 7.5ms | ActiveRecord: 5.4ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:44:27 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.5ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 6.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.6ms | GC: 0.0ms)
+Completed 200 OK in 38ms (Views: 10.2ms | ActiveRecord: 1.1ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:44:27 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.3ms | GC: 0.0ms)
+Completed 200 OK in 38ms (Views: 8.0ms | ActiveRecord: 1.2ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:44:27 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.5ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 10.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 12.4ms | GC: 0.0ms)
+Completed 200 OK in 54ms (Views: 13.9ms | ActiveRecord: 1.0ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:44:27 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 3.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.4ms | GC: 0.0ms)
+Completed 200 OK in 42ms (Views: 7.8ms | ActiveRecord: 1.0ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:44:51 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.5ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 3.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.0ms | GC: 0.0ms)
+Completed 200 OK in 36ms (Views: 5.1ms | ActiveRecord: 1.1ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:45:26 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.7ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 8.1ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 12.4ms | GC: 0.3ms)
+Completed 200 OK in 62ms (Views: 12.2ms | ActiveRecord: 11.2ms (2 queries, 0 cached) | GC: 1.2ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:47:30 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.7ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 7.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 12.0ms | GC: 0.0ms)
+Completed 200 OK in 69ms (Views: 11.0ms | ActiveRecord: 10.4ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 12:47:31 +0530
+Processing by DashboardsController#show as HTML
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.7ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.6ms | GC: 0.0ms)
+Completed 200 OK in 51ms (Views: 5.6ms | ActiveRecord: 1.5ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:47:31 +0530
+Processing by DashboardsController#show as */*
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 12:47:31 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 12:47:31 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+  [1m[36mUser Load (4.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (60.4ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 65.5ms | GC: 1.5ms)
+  Rendered layout layouts/application.html.erb (Duration: 73.7ms | GC: 1.5ms)
+Completed 200 OK in 255ms (Views: 16.4ms | ActiveRecord: 65.3ms (2 queries, 0 cached) | GC: 24.1ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:47:31 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (3.4ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 10.2ms | GC: 3.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.3ms | GC: 3.1ms)
+Completed 200 OK in 42ms (Views: 8.6ms | ActiveRecord: 3.8ms (2 queries, 0 cached) | GC: 3.1ms)
+
+
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 12:47:32 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:47:32 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (2.4ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 7.1ms | GC: 1.8ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.7ms | GC: 1.8ms)
+Completed 200 OK in 43ms (Views: 6.9ms | ActiveRecord: 3.6ms (2 queries, 0 cached) | GC: 1.8ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:47:32 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.7ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.9ms | GC: 0.0ms)
+Completed 200 OK in 36ms (Views: 6.1ms | ActiveRecord: 1.2ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:47:32 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (5.3ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 11.3ms | GC: 1.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 15.4ms | GC: 1.2ms)
+Completed 200 OK in 67ms (Views: 11.1ms | ActiveRecord: 5.8ms (2 queries, 0 cached) | GC: 1.2ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:47:32 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (2.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (2.0ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 5.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.7ms | GC: 0.0ms)
+Completed 200 OK in 49ms (Views: 6.5ms | ActiveRecord: 4.5ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/uploaded_files/share" for 127.0.0.1 at 2025-02-08 12:47:36 +0530
+Processing by UploadedFilesController#share as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/share.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.1ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  ↳ app/views/uploaded_files/share.html.erb:6:in `collect'
+  Rendered uploaded_files/share.html.erb within layouts/application (Duration: 6.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.0ms | GC: 0.3ms)
+Completed 200 OK in 79ms (Views: 9.4ms | ActiveRecord: 1.7ms (2 queries, 0 cached) | GC: 0.6ms)
+
+
+Started GET "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:47:40 +0530
+  [1m[36mUser Load (2.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 6.9ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.6ms | GC: 0.4ms)
+Completed 200 OK in 70ms (Views: 9.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.9ms)
+
+
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:47:40 +0530
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:47:40 +0530
+  [1m[36mUser Load (14.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  [1m[36mUser Load (34.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 5.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.3ms | GC: 0.0ms)
+Completed 200 OK in 44ms (Views: 8.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.5ms)
+
+
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 1.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.9ms | GC: 0.0ms)
+Completed 200 OK in 35ms (Views: 3.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+
+
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:47:40 +0530
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 2.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.0ms | GC: 0.0ms)
+Completed 200 OK in 48ms (Views: 4.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2025-02-08 12:49:28 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='FileUploader'*/[0m
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 15.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 30.3ms | GC: 0.0ms)
+Completed 200 OK in 84ms (Views: 35.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 12:49:28 +0530
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:49:28 +0530
+Processing by HomeController#index as */*
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:49:28 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 13.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 20.7ms | GC: 0.0ms)
+Completed 200 OK in 80ms (Views: 21.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 7.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 16.7ms | GC: 0.0ms)
+Completed 200 OK in 70ms (Views: 18.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:49:28 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 4.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.9ms | GC: 0.0ms)
+Completed 200 OK in 42ms (Views: 12.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:49:28 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 4.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.2ms | GC: 0.0ms)
+Completed 200 OK in 30ms (Views: 8.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:49:28 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 3.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.8ms | GC: 0.0ms)
+Completed 200 OK in 27ms (Views: 5.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:49:28 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 4.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.7ms | GC: 0.0ms)
+Completed 200 OK in 35ms (Views: 7.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/" for 127.0.0.1 at 2025-02-08 12:49:28 +0530
+Processing by HomeController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 3.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.6ms | GC: 0.0ms)
+Completed 200 OK in 29ms (Views: 5.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:49:32 +0530
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 5.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.5ms | GC: 0.0ms)
+Completed 200 OK in 65ms (Views: 9.5ms | ActiveRecord: 3.2ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:49:34 +0530
+  [1m[36mUser Load (2.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 2.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.4ms | GC: 0.0ms)
+Completed 200 OK in 27ms (Views: 5.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/assets/application-89ccb7a5.js" for 127.0.0.1 at 2025-02-08 12:49:34 +0530
+Started GET "/assets/turbo.min-fae85750.js" for 127.0.0.1 at 2025-02-08 12:49:34 +0530
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:49:34 +0530
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 12:49:34 +0530
+  [1m[36mUser Load (14.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+Started GET "/assets/controllers/index-ee64e1f1.js" for 127.0.0.1 at 2025-02-08 12:49:34 +0530
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 4.8ms | GC: 0.9ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.0ms | GC: 0.9ms)
+Completed 200 OK in 43ms (Views: 12.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.9ms)
+
+
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:49:34 +0530
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 2.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.4ms | GC: 0.8ms)
+Completed 200 OK in 33ms (Views: 5.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.8ms)
+
+
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:49:34 +0530
+  [1m[36mUser Load (2.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 2.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.1ms | GC: 0.0ms)
+Completed 200 OK in 31ms (Views: 4.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.9ms)
+
+
+Started GET "/assets/controllers/hello_controller-708796bd.js" for 127.0.0.1 at 2025-02-08 12:49:34 +0530
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:49:34 +0530
+Started GET "/assets/controllers/application-3affb389.js" for 127.0.0.1 at 2025-02-08 12:49:34 +0530
+  [1m[36mUser Load (9.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 2.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.4ms | GC: 0.0ms)
+Completed 200 OK in 31ms (Views: 5.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/assets/stimulus-loading-1fc53fe7.js" for 127.0.0.1 at 2025-02-08 12:49:35 +0530
+Started GET "/assets/stimulus.min-4b1e420e.js" for 127.0.0.1 at 2025-02-08 12:49:35 +0530
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:49:35 +0530
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 2.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.1ms | GC: 0.7ms)
+Completed 200 OK in 38ms (Views: 6.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.7ms)
+
+
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:49:35 +0530
+  [1m[36mUser Load (5.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 2.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.0ms | GC: 0.0ms)
+Completed 200 OK in 38ms (Views: 8.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.5ms)
+
+
+Started POST "/uploaded_files" for 127.0.0.1 at 2025-02-08 12:49:52 +0530
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "uploaded_file"=>{"title"=>"test", "description"=>"test", "file"=>#<ActionDispatch::Http::UploadedFile:0x00007f2af2080f10 @tempfile=#<Tempfile:/tmp/RackMultipart20250208-513726-gy73aw.jpeg>, @content_type="image/jpeg", @original_filename="download 6feb.jpeg", @headers="Content-Disposition: form-data; name=\"uploaded_file[file]\"; filename=\"download 6feb.jpeg\"\r\nContent-Type: image/jpeg\r\n">}, "commit"=>"Upload File"}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*action='create',application='FileUploader',controller='uploaded_files'*/[0m
+  ↳ app/controllers/uploaded_files_controller.rb:31:in `create'
+[36m  Disk Storage (1.3ms) [0m[34mDownloaded file from key: 68npcmi5yii0mor1abitugmswbmh[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*action='create',application='FileUploader',controller='uploaded_files'*/[0m
+  ↳ app/controllers/uploaded_files_controller.rb:31:in `create'
+Completed 500 Internal Server Error in 79ms (ActiveRecord: 9.2ms (0 queries, 0 cached) | GC: 1.9ms)
+
+
+  
+ActiveStorage::FileNotFoundError (ActiveStorage::FileNotFoundError)
+Caused by: Errno::ENOENT (No such file or directory @ rb_sysopen - /home/abhishek/Downloads/file_uploaders-main/storage/68/np/68npcmi5yii0mor1abitugmswbmh)
+
+Information for: ActiveStorage::FileNotFoundError (ActiveStorage::FileNotFoundError):
+  
+app/models/uploaded_file.rb:31:in `compress_file'
+app/controllers/uploaded_files_controller.rb:31:in `create'
+
+Information for cause: Errno::ENOENT (No such file or directory @ rb_sysopen - /home/abhishek/Downloads/file_uploaders-main/storage/68/np/68npcmi5yii0mor1abitugmswbmh):
+  
+app/models/uploaded_file.rb:31:in `compress_file'
+app/controllers/uploaded_files_controller.rb:31:in `create'
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:49:54 +0530
+Started HEAD "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:49:54 +0530
+  [1m[36mUser Load (5.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  [1m[36mUser Load (40.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 5.1ms | GC: 1.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.5ms | GC: 1.0ms)
+Completed 200 OK in 49ms (Views: 8.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.6ms)
+
+
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 2.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.2ms | GC: 0.0ms)
+Completed 200 OK in 40ms (Views: 4.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 12:49:58 +0530
+Processing by DashboardsController#show as HTML
+Started GET "/favicon.ico" for 127.0.0.1 at 2025-02-08 12:49:58 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:49:58 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (19.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUser Load (16.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (20.2ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  [1m[36mUploadedFile Load (13.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 86.4ms | GC: 7.5ms)
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 47.2ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 51.5ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 114.9ms | GC: 7.7ms)
+Completed 200 OK in 128ms (Views: 38.4ms | ActiveRecord: 30.5ms (2 queries, 0 cached) | GC: 7.7ms)
+
+
+Completed 200 OK in 226ms (Views: 69.6ms | ActiveRecord: 69.9ms (2 queries, 0 cached) | GC: 10.3ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 12:49:58 +0530
+Processing by DashboardsController#show as HTML
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 3.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.1ms | GC: 0.0ms)
+Completed 200 OK in 43ms (Views: 5.2ms | ActiveRecord: 1.4ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:49:58 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:49:58 +0530
+Processing by DashboardsController#show as */*
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 12:49:58 +0530
+Processing by DashboardsController#show as */*
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+  [1m[36mUser Load (15.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 12.7ms | GC: 1.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.6ms | GC: 1.4ms)
+Completed 200 OK in 121ms (Views: 14.8ms | ActiveRecord: 16.3ms (2 queries, 0 cached) | GC: 9.4ms)
+
+
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (12.4ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 15.6ms | GC: 0.6ms)
+  Rendered layout layouts/application.html.erb (Duration: 17.0ms | GC: 0.6ms)
+Completed 200 OK in 148ms (Views: 5.3ms | ActiveRecord: 13.1ms (2 queries, 0 cached) | GC: 10.6ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:49:58 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (4.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.7ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.9ms | GC: 0.0ms)
+Completed 200 OK in 54ms (Views: 6.2ms | ActiveRecord: 5.1ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 12:49:59 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:49:59 +0530
+Processing by DashboardsController#show as */*
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 12:49:59 +0530
+  [1m[36mUser Load (3.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.4ms | GC: 0.9ms)
+Completed 200 OK in 53ms (Views: 10.5ms | ActiveRecord: 3.5ms (2 queries, 0 cached) | GC: 3.8ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:49:59 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (3.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 3.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.6ms | GC: 0.0ms)
+Completed 200 OK in 45ms (Views: 5.9ms | ActiveRecord: 3.5ms (2 queries, 0 cached) | GC: 0.8ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:49:59 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:49:59 +0530
+Processing by DashboardsController#show as */*
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.1ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 8.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.5ms | GC: 0.0ms)
+Completed 200 OK in 81ms (Views: 12.5ms | ActiveRecord: 2.7ms (2 queries, 0 cached) | GC: 1.2ms)
+
+
+  [1m[36mUser Load (3.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 12.2ms | GC: 0.0ms)
+Completed 200 OK in 94ms (Views: 12.1ms | ActiveRecord: 4.5ms (2 queries, 0 cached) | GC: 1.7ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:49:59 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (2.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 6.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.8ms | GC: 0.0ms)
+Completed 200 OK in 50ms (Views: 6.0ms | ActiveRecord: 3.5ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:49:59 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (3.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 5.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.4ms | GC: 0.2ms)
+Completed 200 OK in 51ms (Views: 9.2ms | ActiveRecord: 3.9ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:50:02 +0530
+  [1m[36mUser Load (7.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 2.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.7ms | GC: 0.0ms)
+Completed 200 OK in 67ms (Views: 4.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 12:54:06 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='FileUploader'*/[0m
+Processing by DashboardsController#show as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 14.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 32.1ms | GC: 0.0ms)
+Completed 200 OK in 171ms (Views: 37.0ms | ActiveRecord: 37.8ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 12:54:07 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 12:54:07 +0530
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 12:54:07 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:54:07 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 3.6ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.0ms | GC: 0.2ms)
+Completed 200 OK in 58ms (Views: 7.2ms | ActiveRecord: 1.4ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:54:07 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.6ms | GC: 0.0ms)
+Completed 200 OK in 38ms (Views: 8.4ms | ActiveRecord: 1.1ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:54:07 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (2.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 7.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.9ms | GC: 0.0ms)
+Completed 200 OK in 48ms (Views: 15.6ms | ActiveRecord: 3.0ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:54:07 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.1ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 3.9ms | GC: 0.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.4ms | GC: 0.1ms)
+Completed 200 OK in 36ms (Views: 5.0ms | ActiveRecord: 1.9ms (2 queries, 0 cached) | GC: 0.1ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:54:08 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.5ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.5ms | GC: 0.0ms)
+Completed 200 OK in 38ms (Views: 8.8ms | ActiveRecord: 1.2ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 12:54:08 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.7ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 7.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.2ms | GC: 0.0ms)
+Completed 200 OK in 45ms (Views: 11.9ms | ActiveRecord: 1.3ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:54:09 +0530
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 6.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.2ms | GC: 0.0ms)
+Completed 200 OK in 49ms (Views: 9.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/uploaded_files/share" for 127.0.0.1 at 2025-02-08 12:54:09 +0530
+Processing by UploadedFilesController#share as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/share.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  ↳ app/views/uploaded_files/share.html.erb:6:in `collect'
+  Rendered uploaded_files/share.html.erb within layouts/application (Duration: 9.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 12.5ms | GC: 0.0ms)
+Completed 200 OK in 52ms (Views: 12.0ms | ActiveRecord: 2.6ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:54:12 +0530
+  [1m[36mUser Load (2.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 2.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.9ms | GC: 0.0ms)
+Completed 200 OK in 29ms (Views: 5.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:54:12 +0530
+  [1m[36mUser Load (7.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 1.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.1ms | GC: 0.0ms)
+Completed 200 OK in 23ms (Views: 2.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/uploaded_files/share" for 127.0.0.1 at 2025-02-08 12:54:12 +0530
+Processing by UploadedFilesController#share as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/share.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.5ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  ↳ app/views/uploaded_files/share.html.erb:6:in `collect'
+  Rendered uploaded_files/share.html.erb within layouts/application (Duration: 3.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.6ms | GC: 0.0ms)
+Completed 200 OK in 61ms (Views: 5.1ms | ActiveRecord: 1.0ms (2 queries, 0 cached) | GC: 0.6ms)
+
+
+Started GET "/uploaded_files/share" for 127.0.0.1 at 2025-02-08 12:54:33 +0530
+Processing by UploadedFilesController#share as HTML
+  [1m[36mUser Load (4.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/share.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  ↳ app/views/uploaded_files/share.html.erb:6:in `collect'
+  Rendered uploaded_files/share.html.erb within layouts/application (Duration: 4.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.5ms | GC: 0.0ms)
+Completed 200 OK in 51ms (Views: 8.5ms | ActiveRecord: 5.0ms (2 queries, 0 cached) | GC: 0.8ms)
+
+
+Started GET "/uploaded_files/share" for 127.0.0.1 at 2025-02-08 12:54:36 +0530
+Processing by UploadedFilesController#share as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/share.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.0ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  ↳ app/views/uploaded_files/share.html.erb:6:in `collect'
+  Rendered uploaded_files/share.html.erb within layouts/application (Duration: 6.1ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.2ms | GC: 0.3ms)
+Completed 200 OK in 39ms (Views: 7.0ms | ActiveRecord: 1.6ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:54:36 +0530
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 3.6ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.6ms | GC: 0.3ms)
+Completed 200 OK in 30ms (Views: 6.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/uploaded_files/share" for 127.0.0.1 at 2025-02-08 12:54:37 +0530
+Processing by UploadedFilesController#share as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/share.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.5ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  ↳ app/views/uploaded_files/share.html.erb:6:in `collect'
+  Rendered uploaded_files/share.html.erb within layouts/application (Duration: 4.4ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.7ms | GC: 0.2ms)
+Completed 200 OK in 34ms (Views: 5.9ms | ActiveRecord: 1.0ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/uploaded_files/new" for 127.0.0.1 at 2025-02-08 12:54:38 +0530
+  [1m[36mUser Load (5.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*application='FileUploader'*/[0m
+Processing by UploadedFilesController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/new.html.erb within layouts/application
+  Rendered uploaded_files/new.html.erb within layouts/application (Duration: 2.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.7ms | GC: 0.0ms)
+Completed 200 OK in 35ms (Views: 4.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/uploaded_files/share" for 127.0.0.1 at 2025-02-08 12:54:38 +0530
+Processing by UploadedFilesController#share as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/share.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.7ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  ↳ app/views/uploaded_files/share.html.erb:6:in `collect'
+  Rendered uploaded_files/share.html.erb within layouts/application (Duration: 6.0ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.1ms | GC: 0.3ms)
+Completed 200 OK in 41ms (Views: 6.9ms | ActiveRecord: 1.2ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:53:21 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='FileUploader'*/[0m
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 10.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 26.9ms | GC: 0.0ms)
+Completed 200 OK in 172ms (Views: 29.2ms | ActiveRecord: 41.1ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 14:53:22 +0530
+Processing by DashboardsController#show as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 5.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.4ms | GC: 0.0ms)
+Completed 200 OK in 45ms (Views: 9.7ms | ActiveRecord: 1.2ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:53:23 +0530
+Processing by DashboardsController#show as */*
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:53:23 +0530
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+Processing by DashboardsController#show as */*
+  [1m[36mUploadedFile Load (6.0ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 18.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 22.0ms | GC: 0.0ms)
+Completed 200 OK in 67ms (Views: 16.7ms | ActiveRecord: 6.4ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 5.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.2ms | GC: 0.0ms)
+Completed 200 OK in 56ms (Views: 9.8ms | ActiveRecord: 1.5ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 14:53:23 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 14:53:23 +0530
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 14:53:23 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:53:23 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (3.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 6.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.5ms | GC: 0.0ms)
+Completed 200 OK in 52ms (Views: 5.1ms | ActiveRecord: 4.8ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:53:23 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (2.0ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 14.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 16.4ms | GC: 0.0ms)
+Completed 200 OK in 49ms (Views: 15.3ms | ActiveRecord: 3.3ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:53:24 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (2.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (2.2ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.1ms | GC: 0.0ms)
+Completed 200 OK in 43ms (Views: 4.6ms | ActiveRecord: 4.5ms (2 queries, 0 cached) | GC: 0.3ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:53:24 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 3.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.7ms | GC: 0.0ms)
+Completed 200 OK in 32ms (Views: 4.8ms | ActiveRecord: 1.5ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 14:53:52 +0530
+Processing by DashboardsController#show as HTML
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 10.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 15.7ms | GC: 0.3ms)
+Completed 200 OK in 79ms (Views: 15.6ms | ActiveRecord: 11.4ms (2 queries, 0 cached) | GC: 1.2ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:53:52 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.3ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 6.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.4ms | GC: 0.0ms)
+Completed 200 OK in 50ms (Views: 7.9ms | ActiveRecord: 1.9ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 14:53:52 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 14:53:52 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:53:52 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (6.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 13.0ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 15.9ms | GC: 0.4ms)
+Completed 200 OK in 90ms (Views: 9.6ms | ActiveRecord: 7.5ms (2 queries, 0 cached) | GC: 3.0ms)
+
+
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 14:53:53 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:53:53 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (3.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 7.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.6ms | GC: 0.0ms)
+Completed 200 OK in 47ms (Views: 5.8ms | ActiveRecord: 5.0ms (2 queries, 0 cached) | GC: 0.7ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:53:53 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 3.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.8ms | GC: 0.0ms)
+Completed 200 OK in 33ms (Views: 4.8ms | ActiveRecord: 1.4ms (2 queries, 0 cached) | GC: 0.8ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:53:53 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (7.1ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 10.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.4ms | GC: 0.0ms)
+Completed 200 OK in 56ms (Views: 8.1ms | ActiveRecord: 8.2ms (2 queries, 0 cached) | GC: 0.5ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:53:53 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.1ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:96
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.9ms | GC: 0.0ms)
+Completed 200 OK in 34ms (Views: 5.4ms | ActiveRecord: 2.4ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2025-02-08 14:54:12 +0530
+Processing by DashboardsController#show as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.5ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 7.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.4ms | GC: 0.2ms)
+Completed 200 OK in 61ms (Views: 10.9ms | ActiveRecord: 8.1ms (2 queries, 0 cached) | GC: 0.9ms)
+
+
+Started GET "/style.css" for 127.0.0.1 at 2025-02-08 14:54:13 +0530
+Started GET "/assets/bootstrap" for 127.0.0.1 at 2025-02-08 14:54:13 +0530
+Started GET "/responsive.css" for 127.0.0.1 at 2025-02-08 14:54:13 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/responsive.css"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/style.css"):
+  
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:54:13 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.0ms | GC: 0.0ms)
+Completed 200 OK in 58ms (Views: 6.2ms | ActiveRecord: 1.6ms (2 queries, 0 cached) | GC: 0.7ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:54:13 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.8ms | GC: 0.0ms)
+Completed 200 OK in 39ms (Views: 7.2ms | ActiveRecord: 1.1ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:54:13 +0530
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:54:13 +0530
+Processing by DashboardsController#show as */*
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (2.9ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 8.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 12.1ms | GC: 0.0ms)
+Completed 200 OK in 64ms (Views: 12.5ms | ActiveRecord: 3.9ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 3.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.4ms | GC: 0.0ms)
+Completed 200 OK in 64ms (Views: 5.3ms | ActiveRecord: 1.7ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:54:13 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (2.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.6ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 3.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.7ms | GC: 0.0ms)
+Completed 200 OK in 57ms (Views: 5.2ms | ActiveRecord: 3.3ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/dashboard" for 127.0.0.1 at 2025-02-08 14:54:14 +0530
+Processing by DashboardsController#show as */*
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboards/show.html.erb within layouts/application
+  [1m[36mUploadedFile Load (1.5ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='show',application='FileUploader',controller='dashboards'*/[0m
+  ↳ app/views/dashboards/show.html.erb:116
+  Rendered dashboards/show.html.erb within layouts/application (Duration: 4.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.4ms | GC: 0.0ms)
+Completed 200 OK in 35ms (Views: 6.1ms | ActiveRecord: 2.4ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/uploaded_files/share" for 127.0.0.1 at 2025-02-08 14:54:16 +0530
+Processing by UploadedFilesController#share as HTML
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering uploaded_files/share.html.erb within layouts/application
+  [1m[36mUploadedFile Load (0.8ms)[0m  [1m[34mSELECT "uploaded_files".* FROM "uploaded_files" WHERE "uploaded_files"."user_id" = 1 /*action='share',application='FileUploader',controller='uploaded_files'*/[0m
+  ↳ app/views/uploaded_files/share.html.erb:6:in `collect'
+  Rendered uploaded_files/share.html.erb within layouts/application (Duration: 7.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.0ms | GC: 0.0ms)
+Completed 200 OK in 40ms (Views: 9.6ms | ActiveRecord: 1.8ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
